@@ -1,10 +1,10 @@
-(function() {
-  function initForms ($container) {
+window.DjangoMaterial = {
+  initForms: function ($container) {
     // Formsets
     // https://bitbucket.org/ionata/django-formset-js
     $('.formset-field').formset({
       animateForms: true,
-      newFormCallback: initForms
+      newFormCallback: DjangoMaterial.initForms
     })
 
     // Select
@@ -53,9 +53,9 @@
           scrollInput: false
         })
       })
-  }
+  },
 
-  function destroyForms ($container) {
+  destroyForms: function ($container) {
     // Select
     $container
       .find('select')
@@ -68,11 +68,13 @@
       .find('[data-form-control="date"],[data-form-control="time"],[data-form-control="datetime"]')
       .datetimepicker('destroy');
   }
+};
 
+(function() {
   if(window.Turbolinks) {
-    $(document).on('turbolinks:load', function() { initForms($(document)) })
-    $(document).on('turbolinks:before-cache', function () { destroyForms($(document))})
+    $(document).on('turbolinks:load', function() { DjangoMaterial.initForms($(document)) })
+    $(document).on('turbolinks:before-cache', function () { DjangoMaterial.destroyForms($(document))})
   } else {
-    $(document).ready(function() { initForms($(document)) })
+    $(document).ready(function() { DjangoMaterial.initForms($(document)) })
   }
 })()
